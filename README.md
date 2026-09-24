@@ -114,6 +114,10 @@ docs/                  ADRs · engenharia · ágil · produto
 .github/               CI/CD · PR template · CODEOWNERS · Dependabot
 ```
 
+## Curso
+
+[`docs/aulas/`](docs/aulas/README.md): 19 aulas que explicam o sistema inteiro, com conceitos, trade-offs, exercícios e aplicação em ERP Java + PostgreSQL.
+
 ## Decisões de arquitetura
 
 As decisões e seus trade-offs estão em [`docs/adr/`](docs/adr/):
