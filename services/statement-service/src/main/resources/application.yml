@@ -1,0 +1,38 @@
+server:
+  port: ${PORT:8082}
+  shutdown: graceful
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: statement-service
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/statements}
+      auto-index-creation: true
+
+app:
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092}
+    consumer-group: statement-service
+    topics:
+      transfer-events: transfer-events
+  aws:
+    region: ${AWS_REGION:us-east-1}
+    s3:
+      bucket: ${STATEMENTS_BUCKET:pocbank-statements}
+      endpoint: ${AWS_S3_ENDPOINT:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

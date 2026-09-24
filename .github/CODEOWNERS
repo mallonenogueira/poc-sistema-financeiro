@@ -1,0 +1,7 @@
+# Revisores obrigatórios por área (ajuste para os times reais)
+*                         @pocbank/tech-leads
+/services/account-service/ @pocbank/squad-contas
+/services/statement-service/ @pocbank/squad-extrato
+/frontend/                @pocbank/squad-web
+/frontend/src/design-system/ @pocbank/design-system
+/infra/ /k8s/ /.github/   @pocbank/platform

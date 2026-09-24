@@ -1,0 +1,15 @@
+# Endereços da infraestrutura gerenciada (MSK, RDS, DocumentDB) são sobrescritos por overlay.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pocbank-config
+data:
+  KAFKA_BOOTSTRAP_SERVERS: kafka.pocbank-infra.svc:9092
+  DB_URL: jdbc:postgresql://postgres.pocbank-infra.svc:5432/accounts
+  MONGODB_URI: mongodb://mongo.pocbank-infra.svc:27017/statements
+  FRAUD_API_URL: http://fraud-api.pocbank-infra.svc:8080
+  ACCOUNT_SERVICE_URL: http://account-service:8080
+  STATEMENT_SERVICE_URL: http://statement-service:8080
+  AWS_REGION: us-east-1
+  STATEMENTS_BUCKET: pocbank-statements
+  PORT: "8080"

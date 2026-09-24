@@ -1,0 +1,64 @@
+# ServiceAccount com IRSA: o pod assume uma IAM Role com permissão só no bucket de extratos,
+# sem access keys estáticas. O ARN é definido por overlay.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: statement-service
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::000000000000:role/pocbank-statement-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statement-service
+  labels: { app: statement-service }
+spec:
+  # Réplicas <= partições do tópico (3): consumidores extras ficariam ociosos.
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+  selector:
+    matchLabels: { app: statement-service }
+  template:
+    metadata:
+      labels: { app: statement-service }
+    spec:
+      serviceAccountName: statement-service
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: app
+          image: statement-service
+          ports: [{ name: http, containerPort: 8080 }]
+          envFrom:
+            - configMapRef: { name: pocbank-config }
+          resources:
+            requests: { cpu: 200m, memory: 384Mi }
+            limits: { memory: 640Mi }
+          startupProbe:
+            httpGet: { path: /actuator/health/liveness, port: http }
+            periodSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            httpGet: { path: /actuator/health/liveness, port: http }
+          readinessProbe:
+            httpGet: { path: /actuator/health/readiness, port: http }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: statement-service
+spec:
+  selector: { app: statement-service }
+  ports: [{ name: http, port: 8080, targetPort: http }]

@@ -1,0 +1,12 @@
+target/
+node_modules/
+dist/
+coverage/
+.idea/
+.vscode/
+*.iml
+.DS_Store
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars

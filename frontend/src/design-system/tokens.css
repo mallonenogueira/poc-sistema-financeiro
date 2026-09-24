@@ -1,0 +1,74 @@
+/*
+ * Design tokens — única fonte de verdade para cor, tipografia, espaçamento e forma.
+ * Componentes consomem apenas tokens semânticos (--ds-color-action, não #0b5cff),
+ * o que permite trocar o tema (ou adotar os tokens do Diana) sem tocar nos componentes.
+ */
+:root {
+  /* Primitivos */
+  --ds-blue-600: #0b5cff;
+  --ds-blue-700: #0847c7;
+  --ds-blue-50: #eef4ff;
+  --ds-green-600: #0f8a4b;
+  --ds-green-50: #e8f6ee;
+  --ds-red-600: #c62828;
+  --ds-red-50: #fdecec;
+  --ds-amber-600: #a15c00;
+  --ds-amber-50: #fff5e0;
+  --ds-gray-900: #111827;
+  --ds-gray-700: #374151;
+  --ds-gray-500: #6b7280;
+  --ds-gray-300: #d1d5db;
+  --ds-gray-100: #f3f4f6;
+  --ds-white: #ffffff;
+
+  /* Semânticos */
+  --ds-color-bg: var(--ds-gray-100);
+  --ds-color-surface: var(--ds-white);
+  --ds-color-text: var(--ds-gray-900);
+  --ds-color-text-muted: var(--ds-gray-500);
+  --ds-color-border: var(--ds-gray-300);
+  --ds-color-action: var(--ds-blue-600);
+  --ds-color-action-hover: var(--ds-blue-700);
+  --ds-color-action-subtle: var(--ds-blue-50);
+  --ds-color-on-action: var(--ds-white);
+  --ds-color-success: var(--ds-green-600);
+  --ds-color-success-subtle: var(--ds-green-50);
+  --ds-color-danger: var(--ds-red-600);
+  --ds-color-danger-subtle: var(--ds-red-50);
+  --ds-color-warning: var(--ds-amber-600);
+  --ds-color-warning-subtle: var(--ds-amber-50);
+  --ds-color-focus: var(--ds-blue-600);
+
+  --ds-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ds-font-size-sm: 0.875rem;
+  --ds-font-size-md: 1rem;
+  --ds-font-size-lg: 1.25rem;
+  --ds-font-size-xl: 1.75rem;
+  --ds-font-weight-regular: 400;
+  --ds-font-weight-bold: 600;
+
+  --ds-space-1: 4px;
+  --ds-space-2: 8px;
+  --ds-space-3: 12px;
+  --ds-space-4: 16px;
+  --ds-space-6: 24px;
+  --ds-space-8: 32px;
+
+  --ds-radius-sm: 6px;
+  --ds-radius-md: 10px;
+  --ds-shadow-card: 0 1px 2px rgb(17 24 39 / 6%), 0 4px 12px rgb(17 24 39 / 6%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ds-color-bg: #0b1220;
+    --ds-color-surface: #121a2b;
+    --ds-color-text: #e5e7eb;
+    --ds-color-text-muted: #9ca3af;
+    --ds-color-border: #243049;
+    --ds-color-action-subtle: #14234a;
+    --ds-color-success-subtle: #0f2a1d;
+    --ds-color-danger-subtle: #3a1414;
+    --ds-color-warning-subtle: #33230a;
+  }
+}

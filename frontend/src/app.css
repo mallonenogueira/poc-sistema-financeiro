@@ -1,0 +1,18 @@
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--ds-space-6) var(--ds-space-4);
+}
+
+.app__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4);
+  margin-bottom: var(--ds-space-6);
+}
+
+.app__brand {
+  margin: 0;
+  font-size: var(--ds-font-size-xl);
+  color: var(--ds-color-action);
+}

@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: pocbank
+
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: pocbank
+    includeSelectors: false
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - account-service.yaml
+  - statement-service.yaml
+  - api-gateway.yaml
+  - frontend.yaml
+  - ingress.yaml
+  - policies.yaml
+
+images:
+  - name: account-service
+    newName: ghcr.io/pocbank/account-service
+    newTag: latest
+  - name: statement-service
+    newName: ghcr.io/pocbank/statement-service
+    newTag: latest
+  - name: api-gateway
+    newName: ghcr.io/pocbank/api-gateway
+    newTag: latest
+  - name: frontend
+    newName: ghcr.io/pocbank/frontend
+    newTag: latest

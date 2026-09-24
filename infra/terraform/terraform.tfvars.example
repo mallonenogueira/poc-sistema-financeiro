@@ -1,0 +1,5 @@
+region                 = "us-east-1"
+environment            = "dev"
+statements_bucket_name = "pocbank-statements-dev-<sufixo-unico>"
+vpc_id                 = "vpc-xxxxxxxx"
+subnet_id              = "subnet-xxxxxxxx"

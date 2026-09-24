@@ -1,0 +1,40 @@
+# PodDisruptionBudgets: drenagem de nó (upgrade do cluster) nunca derruba todas as réplicas.
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: account-service
+spec:
+  minAvailable: 1
+  selector: { matchLabels: { app: account-service } }
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: statement-service
+spec:
+  minAvailable: 1
+  selector: { matchLabels: { app: statement-service } }
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: api-gateway
+spec:
+  minAvailable: 1
+  selector: { matchLabels: { app: api-gateway } }
+---
+# Zero-trust entre pods: os serviços de domínio só aceitam tráfego vindo do gateway.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: domain-services-from-gateway
+spec:
+  podSelector:
+    matchExpressions:
+      - { key: app, operator: In, values: [account-service, statement-service] }
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector: { matchLabels: { app: api-gateway } }
+      ports:
+        - { port: 8080 }

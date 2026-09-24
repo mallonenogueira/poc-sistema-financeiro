@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - external-secret.yaml
+
+configMapGenerator:
+  - name: pocbank-config
+    namespace: pocbank
+    behavior: merge
+    literals:
+      - KAFKA_BOOTSTRAP_SERVERS=b-1.pocbank.kafka.us-east-1.amazonaws.com:9094
+      - DB_URL=jdbc:postgresql://pocbank.cluster-xyz.us-east-1.rds.amazonaws.com:5432/accounts
+      - MONGODB_URI=mongodb://pocbank.cluster-xyz.us-east-1.docdb.amazonaws.com:27017/statements?tls=true
+
+patches:
+  - target: { kind: ServiceAccount, name: statement-service }
+    patch: |-
+      - op: replace
+        path: /metadata/annotations/eks.amazonaws.com~1role-arn
+        value: arn:aws:iam::123456789012:role/pocbank-statement-service
+  - target: { kind: Ingress, name: pocbank }
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: pocbank.example.com
