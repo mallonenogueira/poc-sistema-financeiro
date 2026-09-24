@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/root/.m2 \
     mvn -B -ntp -pl ${MODULE} -am package -DskipTests \
  && cp ${MODULE}/target/*.jar /workspace/app.jar
 
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 RUN addgroup -S app && adduser -S app -G app
 USER app
 WORKDIR /app
