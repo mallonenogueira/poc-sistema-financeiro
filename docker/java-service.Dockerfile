@@ -2,7 +2,7 @@
 # Dockerfile único para todos os serviços Java: MODULE=services/account-service etc.
 ARG MODULE
 
-FROM maven:3.9-eclipse-temurin-21 AS build
+FROM maven:3-eclipse-temurin-26 AS build
 ARG MODULE
 WORKDIR /workspace
 # POMs primeiro: camada de dependências fica em cache enquanto só o código muda.
