@@ -30,14 +30,14 @@ jobs:
         run: mvn -B -ntp verify
       - name: Publica relatórios de teste
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: backend-reports
           path: |
             **/target/surefire-reports
             **/target/site/jacoco
       - name: Guarda o jar da Lambda
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: lambda-jar
           path: lambda/statement-report-lambda/target/statement-report-lambda.jar
